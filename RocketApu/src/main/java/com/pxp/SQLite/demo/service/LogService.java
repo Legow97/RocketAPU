@@ -1,8 +1,11 @@
 package com.pxp.SQLite.demo.service;
 
+import com.pxp.SQLite.demo.SpringBootAndSqLiteApplication;
 import com.pxp.SQLite.demo.dbconection.DatabaseConnection;
 import com.pxp.SQLite.demo.entity.LogEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
@@ -16,46 +19,48 @@ import java.util.List;
 @Service
 public class LogService {
 
-    private final DatabaseConnection dbConnection;
+    public LogEntity getLog(String id){
 
-    public LogService() {
-        this.dbConnection = DatabaseConnection.getInstance();
-    }
+        String query = "SELECT * FROM RocketLogs WHERE id = "+id ;
+        LogEntity log = new LogEntity();
 
-    public void consultarLogsDeNavegacion(int id) {
-        //conexion de bd
-        Connection connection = dbConnection.getConnection();
-        if (connection == null) {
-            System.err.println("Error: No se pudo conectar a la base de datos.");
-            return;
-        }
+        // Obtener la conexión desde DatabaseConnection
+        DatabaseConnection dbConnection = DatabaseConnection.getInstance();
 
-        try {
-            // Consulta SQL
-            String sql = "SELECT * FROM RocketLogs WHERE id = id";
+        try (PreparedStatement statement = dbConnection.getConnection().prepareStatement(query)) {
 
-            // Crear una declaración preparada para ejecutar la consulta
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-
-            // Ejecutar la consulta y obtener el resultado
+            // Ejecutar la consulta
             ResultSet resultSet = statement.executeQuery();
-
-            // Procesar los resultados
-            while (resultSet.next()) {
-                // Obtener valores de las columnas
-                int logId = resultSet.getInt("id");
-                String altitude = resultSet.getString("altitude");
-                // Procesar otros valores según las columnas de tu tabla
-
-                // Ejemplo: Imprimir los resultados
-                System.out.println("ID: " + logId + ", altitud: " + altitude);
+            if(resultSet.next()) {
+                // Crear un objeto Product por cada fila del resultado
+                log.setId(resultSet.getInt("id"));
+                log.setAltitude(resultSet.getDouble("altitude"));
+                log.setVerticalVelocity(resultSet.getDouble("verticalVelocity"));
+                log.setVerticalacceleration(resultSet.getDouble("verticalacceleration"));
+                log.setTotalVelocity(resultSet.getDouble("totalVelocity"));
+                log.setTotalAcceleration(resultSet.getDouble("totalAcceleration"));
+                log.setLatitude(resultSet.getDouble("latitude"));
+                log.setLongitude(resultSet.getDouble("longitude"));
+                log.setGravitalAcceleration(resultSet.getDouble("gravitalAcceleration"));
+                log.setMotorMass(resultSet.getDouble("motorMass"));
+                log.setLongitudinalMomentInertial(resultSet.getDouble("longitudinalMomentInertial"));
+                log.setRotationalMomentInertial(resultSet.getDouble("rotationalMomentInertial"));
+                log.setFrictionDrag(resultSet.getDouble("frictionDrag"));
+                log.setPressureDrag(resultSet.getDouble("pressureDrag"));
+                log.setBaseDrag(resultSet.getDouble("baseDrag"));
+                log.setVerticalOrientation(resultSet.getDouble("verticalOrientation"));
+                log.setLateralOrientation(resultSet.getDouble("lateralOrientation"));
+                log.setWindVelocity(resultSet.getDouble("windVelocity"));
+                log.setAirTemperature(resultSet.getDouble("airTemperature"));
+                log.setAirPressure(resultSet.getDouble("airPressure"));
             }
+
         } catch (SQLException e) {
-            System.err.println("Error al ejecutar la consulta: " + e.getMessage());
-        } finally {
-            // Cerrar la conexión
-            dbConnection.closeConnection();
+            System.err.println("Error durante la consulta: " + e.getMessage());
         }
+
+        dbConnection.closeConnection();
+        // Retornar la lista de productos
+        return log;
     }
 }

@@ -27,7 +27,7 @@ public class LogEntity {
     private	Double	longitude;
     private	Double	gravitalAcceleration;
     private	Double	motorMass;
-    private	Double	longitudinalMomentInitial;
+    private	Double	longitudinalMomentInertial;
     private	Double	rotationalMomentInertial;
     private	Double	frictionDrag;
     private	Double	pressureDrag;
@@ -38,7 +38,7 @@ public class LogEntity {
     private	Double	airTemperature;
     private	Double	airPressure;
 
-    public LogEntity(Integer id, Double timeRegister, Double altitude, Double verticalVelocity, Double verticalacceleration, Double totalVelocity, Double totalAcceleration, Double latitude, Double longitude, Double gravitalAcceleration, Double motorMass, Double longitudinalMomentInitial, Double rotationalMomentInertial, Double frictionDrag, Double pressureDrag, Double baseDrag, Double verticalOrientation, Double lateralOrientation, Double windVelocity, Double airTemperature, Double airPressure) {
+    public LogEntity(Integer id, Double timeRegister, Double altitude, Double verticalVelocity, Double verticalacceleration, Double totalVelocity, Double totalAcceleration, Double latitude, Double longitude, Double gravitalAcceleration, Double motorMass, Double longitudinalMomentInertial, Double rotationalMomentInertial, Double frictionDrag, Double pressureDrag, Double baseDrag, Double verticalOrientation, Double lateralOrientation, Double windVelocity, Double airTemperature, Double airPressure) {
         this.id = id;
         this.timeRegister = timeRegister;
         this.altitude = altitude;
@@ -50,7 +50,7 @@ public class LogEntity {
         this.longitude = longitude;
         this.gravitalAcceleration = gravitalAcceleration;
         this.motorMass = motorMass;
-        this.longitudinalMomentInitial = longitudinalMomentInitial;
+        this.longitudinalMomentInertial = longitudinalMomentInertial;
         this.rotationalMomentInertial = rotationalMomentInertial;
         this.frictionDrag = frictionDrag;
         this.pressureDrag = pressureDrag;
@@ -110,8 +110,8 @@ public class LogEntity {
         return motorMass;
     }
 
-    public Double getLongitudinalMomentInitial() {
-        return longitudinalMomentInitial;
+    public Double getLongitudinalMomentInertial() {
+        return longitudinalMomentInertial;
     }
 
     public Double getRotationalMomentInertial() {
@@ -194,8 +194,8 @@ public class LogEntity {
         this.motorMass = motorMass;
     }
 
-    public void setLongitudinalMomentInitial(Double longitudinalMomentInitial) {
-        this.longitudinalMomentInitial = longitudinalMomentInitial;
+    public void setLongitudinalMomentInertial(Double longitudinalMomentInertial) {
+        this.longitudinalMomentInertial = longitudinalMomentInertial;
     }
 
     public void setRotationalMomentInertial(Double rotationalMomentInertial) {
@@ -232,5 +232,32 @@ public class LogEntity {
 
     public void setAirPressure(Double airPressure) {
         this.airPressure = airPressure;
+    }
+
+    @Override
+    public String toString() {
+        return "LogEntity{" +
+                "id=" + id +
+                ", timeRegister=" + timeRegister +
+                ", altitude=" + altitude +
+                ", verticalVelocity=" + verticalVelocity +
+                ", verticalacceleration=" + verticalacceleration +
+                ", totalVelocity=" + totalVelocity +
+                ", totalAcceleration=" + totalAcceleration +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", gravitalAcceleration=" + gravitalAcceleration +
+                ", motorMass=" + motorMass +
+                ", longitudinalMomentInitial=" + longitudinalMomentInertial +
+                ", rotationalMomentInertial=" + rotationalMomentInertial +
+                ", frictionDrag=" + frictionDrag +
+                ", pressureDrag=" + pressureDrag +
+                ", baseDrag=" + baseDrag +
+                ", verticalOrientation=" + verticalOrientation +
+                ", lateralOrientation=" + lateralOrientation +
+                ", windVelocity=" + windVelocity +
+                ", airTemperature=" + airTemperature +
+                ", airPressure=" + airPressure +
+                '}';
     }
 }
